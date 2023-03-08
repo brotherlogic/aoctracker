@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package aoctracker;
+
+option go_package = "github.com/brotherlogic/aoctracker/proto";
+
+message TrackRequest {
+  int32 current_year = 1;
+  int32 current_day = 2;
+  int32 current_part = 3;
+}
+
+message TrackResponse {}
+
+
+service AOCTrackerService {
+  rpc Track (TrackRequest) returns (TrackResponse) {};
+}

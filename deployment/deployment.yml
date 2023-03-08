@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aoctracker
+  namespace: adventofcode
+  labels:
+    app: aoctracker
+spec:
+  type: NodePort
+  metadata:
+    labels:
+      app: aoctracker
+  ports:
+    - name: grpc
+      port: 8080
+      targetPort: 8080
+    - name: metrics
+      port: 8081
+      targetPort: 8081
+  selector:
+    app: aoctracker
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aoctracker
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+  namespaceSelector:
+    matchNames:
+      - aoctracker
+  selector:
+    matchLabels:
+      app: aoctracker
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventofcode
+  namespace: aoctracker
+spec:
+  selector:
+    matchLabels:
+      app: aoctracker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aoctracker
+    spec:
+      containers:
+      - name: aoctracker
+        image: registry.brotherlogic-backend.com/brotherlogic/aoctracker:0.12.0 # {"$imagepolicy": "flux-system:aoctracker"}
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: regcred
