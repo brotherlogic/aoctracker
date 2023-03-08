@@ -19,6 +19,7 @@ import (
 var (
 	port        = flag.Int("port", 8080, "The server port.")
 	metricsPort = flag.Int("metrics_port", 8081, "Metrics port")
+	globalPort  = flag.Int("global_port", 8082, "The server port.")
 )
 
 var (
