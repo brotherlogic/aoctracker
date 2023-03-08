@@ -44,7 +44,7 @@ func main() {
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
-		log.Fatalf("aoctracker failed to listen on the serving port %v: %v", *port, err)
+		log.Fatalf("aoctracker failed to listen on the main serving port %v: %v", *port, err)
 	}
 	gs := grpc.NewServer()
 	pb.RegisterAOCTrackerServiceServer(gs, s)
