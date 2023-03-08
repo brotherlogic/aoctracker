@@ -42,8 +42,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adventofcode
-  namespace: aoctracker
+  name: aoctracker
+  namespace: adventofcode
 spec:
   selector:
     matchLabels:
