@@ -34,7 +34,7 @@ spec:
       interval: 30s
   namespaceSelector:
     matchNames:
-      - aoctracker
+      - adventofcode
   selector:
     matchLabels:
       app: aoctracker
